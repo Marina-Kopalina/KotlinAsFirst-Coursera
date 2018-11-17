@@ -4,6 +4,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import kotlin.math.max
 import kotlin.math.sqrt
+import kotlin.math.min
 
 /**
  * Пример
@@ -62,7 +63,29 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    if (age in 1..20){
+        if (age == 1) return ("$age год")
+        else if (age in 2..4) return ("$age года")
+//        else return ("$age лет")
+    }
+    if (age in 21..100){
+        if (age % 10 == 1) return ("$age год")
+        else if (age % 10 in 2..4) return ("$age года")
+//        else return ("$age лет")
+    }
+    if (age in 101..120){
+        if (age == 101) return ("$age год")
+        else if (age in 102..104) return ("$age года")
+//        else return ("$age лет")
+    }
+    if (age in 121..199){
+        if (age % 10 == 1) return ("$age год")
+        else if (age % 10 in 2..4) return ("$age года")
+//        else return ("$age лет")
+    }
+    return ("$age лет")
+}
 
 /**
  * Простая
@@ -120,4 +143,20 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (a > b || c > d) -13 // проверка исходных данных, возможно, лишняя...
+    return when {
+    // нет пересечения
+        b < c -> -1
+        d < a -> -1
+    // пересечение есть точка
+        b == c -> 0
+        d == a -> 0
+        a == b -> 0
+        c == d -> 0
+    // пересечение
+        a == c -> (min(b, d) - a)
+        b == d -> (b - max(a, c))
+        else -> (min(b, d) - max(a, c))
+    }
+}
