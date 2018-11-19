@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -38,7 +40,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,7 +68,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    if (abs(n) < 10) return 1
+    var i = 1
+    var a = n
+    while (a >= 10) {
+        i += 1
+        a /= 10
+    }
+    return i
+}
+
 
 /**
  * Простая
@@ -132,7 +144,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var next = x
+    var i = 0
+    if (x == 1) return 0
+    else {
+        while (next != 1) {
+            i += 1
+            if (next % 2 == 0) next /= 2
+            else next = 3 * next + 1
+            if (next == 1) break
+        }
+        return i
+    }
+}
 
 /**
  * Средняя
@@ -160,6 +185,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int = TODO()
+//        ((n.toString()).reversed()).toInt()
 
 /**
  * Средняя
