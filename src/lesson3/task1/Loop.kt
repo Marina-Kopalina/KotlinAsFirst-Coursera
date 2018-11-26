@@ -2,8 +2,8 @@
 
 package lesson3.task1
 
-import kotlin.math.abs
-import kotlin.math.sqrt
+import lesson1.task1.sqr
+import kotlin.math.*
 
 /**
  * Пример
@@ -71,7 +71,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     if (abs(n) < 10) return 1
     var i = 1
-    var a = n
+    var a = abs(n)
     while (a >= 10) {
         i += 1
         a /= 10
@@ -86,7 +86,19 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    val j: Int = (n - 1) / 2
+    var a = 1
+    var b = 1
+    if (n == 1) return 1
+    if (n == 2) return 1
+    for (i in 1..j) {
+        a += b
+        b += a
+    }
+    if (n % 2 == 0) return b
+    return a
+}
 
 /**
  * Простая
@@ -94,7 +106,14 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    if (n == m) return n
+    if (max(m, n) % min(m, n) == 0) return max(m, n)
+    for (k in 2 until min(m, n)) {
+        if ((max(m, n) * k) % min(m, n) == 0) return max(m, n) * k
+    }
+    return m * n
+}
 
 /**
  * Простая
@@ -166,7 +185,29 @@ fun collatzSteps(x: Int): Int {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    if (x / (PI * 2.0) - (x / (PI * 2.0)).toInt() == 0.0) return 0.0
+    if (x / (PI * 2.0) - (x / (PI * 2.0)).toInt() == 0.25) return 1.0
+    if (x / (PI * 2.0) - (x / (PI * 2.0)).toInt() == 0.5) return 0.0
+    if (x / (PI * 2.0) - (x / (PI * 2.0)).toInt() == 0.75) return -1.0
+    var b = x
+    var sum = x
+    var j = 1
+    var sign = -1
+    do {
+        j *= (j + 1) * (j + 2)
+        b *= sqr(x) / j
+        if (sign == -1) {
+            sum -= b
+            sign = 1
+        }
+        if (sign == 1) {
+            sum += b
+            sign = -1
+        }
+    } while (b >= eps)
+    return sum
+}
 
 /**
  * Средняя
@@ -217,7 +258,16 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    if (n == 1) return 1
+    var i = 0
+    var chSum = 0
+    while (chSum < n) {
+        i++
+        chSum += digitNumber(sqr(i))
+    }
+    return (sqr(i) / 10.0.pow(chSum - n)).toInt() % 10
+}
 
 /**
  * Сложная
@@ -228,4 +278,14 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    if (n == 1) return 1
+    var i = 0
+    var chSum = 0
+    while (chSum < n) {
+        i++
+        chSum += digitNumber(fib(i))
+    }
+    return (fib(i) / 10.0.pow(chSum - n)).toInt() % 10
+}
+
