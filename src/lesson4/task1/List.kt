@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -237,7 +238,21 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+//    if (str.toInt() < base) return str.toInt()
+    val chars = "abcdefghijklmnopqrstuvwxyz"
+    var rez = 0.0
+    var i = str.length
+    for (char in str) {
+        i--
+        rez += if (chars.contains(char)) {
+            (chars.indexOf("$char") + 10).toDouble() * (base.toDouble()).pow(i)
+        } else {
+            char.toString().toDouble() * base.toDouble().pow(i)
+        }
+    }
+    return rez.toInt()
+}
 
 /**
  * Сложная
